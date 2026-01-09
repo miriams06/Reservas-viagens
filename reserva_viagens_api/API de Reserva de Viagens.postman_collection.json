@@ -1,0 +1,794 @@
+{
+	"info": {
+		"_postman_id": "7c8cf821-90c9-4ccb-a963-47f91412fa58",
+		"name": "API de Reserva de Viagens",
+		"description": "API para gestão de reservas de viagens, incluindo autenticação, gestão de utilizadores, viagens e reservas.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31184438",
+		"_collection_link": "https://blue-firefly-850649.postman.co/workspace/My-Workspace~fcae15eb-748f-4ecd-8326-285fc9e2036a/collection/31184438-7c8cf821-90c9-4ccb-a963-47f91412fa58?action=share&source=collection_link&creator=31184438"
+	},
+	"item": [
+		{
+			"name": "Autenticação",
+			"item": [
+				{
+					"name": "Registo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Novo Utilizador\",\r\n    \"email\": \"novo@email.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"register"
+							]
+						},
+						"description": "Regista um novo utilizador no sistema e retorna um token JWT."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"novo@email.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "Autentica um utilizador existente e retorna um token JWT válido por 60 minutos."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"logout"
+							]
+						},
+						"description": "Invalida o token JWT atual do utilizador autenticado."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para registo, login e logout de utilizadores."
+		},
+		{
+			"name": "Utilizadores",
+			"item": [
+				{
+					"name": "Perfil",
+					"item": [
+						{
+							"name": "Ver Perfil",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/perfil",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"perfil"
+									]
+								},
+								"description": "Retorna os dados do perfil do utilizador autenticado."
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar Conta",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/user",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"user"
+									]
+								},
+								"description": "Elimina a conta do utilizador autenticado."
+							},
+							"response": []
+						}
+					],
+					"description": "Operações relacionadas ao perfil do utilizador."
+				},
+				{
+					"name": "Viagens",
+					"item": [
+						{
+							"name": "Listar Viagens",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/viagens",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"viagens"
+									]
+								},
+								"description": "Retorna todas as viagens disponíveis para o utilizador."
+							},
+							"response": []
+						}
+					],
+					"description": "Operações relacionadas às viagens disponíveis."
+				},
+				{
+					"name": "Reservas",
+					"item": [
+						{
+							"name": "Listar Reservas",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/reservas",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"reservas"
+									]
+								},
+								"description": "Retorna todas as reservas do utilizador autenticado."
+							},
+							"response": []
+						},
+						{
+							"name": "Criar Reserva",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"viagem_id\": 2,\r\n    \"lugares\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/reservas",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"reservas"
+									]
+								},
+								"description": "Cria uma nova reserva para o utilizador autenticado."
+							},
+							"response": []
+						},
+						{
+							"name": "Cancelar Reserva",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/reservas/6",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"reservas",
+										"6"
+									]
+								},
+								"description": "Cancela uma reserva específica do utilizador."
+							},
+							"response": []
+						}
+					],
+					"description": "Operações relacionadas às reservas do utilizador."
+				}
+			],
+			"description": "Endpoints para gestão de perfil de utilizador."
+		},
+		{
+			"name": "Administração",
+			"item": [
+				{
+					"name": "Gestão de Utilizadores",
+					"item": [
+						{
+							"name": "Listar Utilizadores",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users"
+									]
+								},
+								"description": "Retorna todos os utilizadores do sistema. Apenas para administradores."
+							},
+							"response": []
+						},
+						{
+							"name": "Ver Utilizador",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/users/8",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"8"
+									]
+								},
+								"description": "Retorna os dados de um utilizador específico. Apenas para administradores."
+							},
+							"response": []
+						},
+						{
+							"name": "Criar Utilizador",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Novo Utilizador\",\r\n    \"email\": \"novo@exemplo.com\",\r\n    \"password\": \"senha123\",\r\n    \"role\": \"user\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users"
+									]
+								},
+								"description": "Cria um novo utilizador no sistema. Apenas para administradores."
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar Utilizador",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Nome Atualizado\",\r\n    \"email\": \"email_atualizado@exemplo.com\",\r\n    \"role\": \"admin\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users/8",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"8"
+									]
+								},
+								"description": "Atualiza os dados de um utilizador específico. Apenas para administradores."
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar Utilizador",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users/13",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"13"
+									]
+								},
+								"description": "Elimina um utilizador específico do sistema. Apenas para administradores."
+							},
+							"response": []
+						}
+					],
+					"description": "Operações administrativas para gestão de utilizadores."
+				},
+				{
+					"name": "Gestão de Viagens",
+					"item": [
+						{
+							"name": "Listar Viagens",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/viagens",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"viagens"
+									]
+								},
+								"description": "Retorna todas as viagens do sistema. Apenas para administradores."
+							},
+							"response": []
+						},
+						{
+							"name": "Criar Viagem",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"destino\": \"Roma\",\r\n  \"data_partida\": \"2024-10-26\",\r\n  \"data_regresso\": \"2024-10-30\",\r\n  \"preco\": 1400,\r\n  \"lugares_disponiveis\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/viagens",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"viagens"
+									]
+								},
+								"description": "Cria uma nova viagem no sistema. Apenas para administradores."
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar Viagem",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"destino\": \"Porto\",\r\n  \"data_partida\": \"2024-08-01\",\r\n  \"data_regresso\": \"2024-08-10\",\r\n  \"preco\": 120,\r\n  \"lugares_disponiveis\": 40\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/viagens/3",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"viagens",
+										"3"
+									]
+								},
+								"description": "Atualiza os dados de uma viagem específica. Apenas para administradores."
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar Viagem",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/viagens/4",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"viagens",
+										"4"
+									]
+								},
+								"description": "Elimina uma viagem específica do sistema. Apenas para administradores."
+							},
+							"response": []
+						}
+					],
+					"description": "Operações administrativas para gestão de viagens."
+				},
+				{
+					"name": "Gestão de Reservas",
+					"item": [
+						{
+							"name": "Listar Todas Reservas",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/reservas/admin",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"reservas",
+										"admin"
+									]
+								},
+								"description": "Retorna todas as reservas do sistema. Apenas para administradores."
+							},
+							"response": []
+						},
+						{
+							"name": "Ver Reserva",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/reservas/admin/4",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"reservas",
+										"admin",
+										"4"
+									]
+								},
+								"description": "Retorna os dados de uma reserva específica. Apenas para administradores."
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar Reserva",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"lugares\": 30\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/reservas/admin/4",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"reservas",
+										"admin",
+										"4"
+									]
+								},
+								"description": "Atualiza os dados de uma reserva específica. Apenas para administradores."
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar Reserva",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/reservas/admin/7",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"reservas",
+										"admin",
+										"7"
+									]
+								},
+								"description": "Elimina uma reserva específica do sistema. Apenas para administradores."
+							},
+							"response": []
+						}
+					],
+					"description": "Operações administrativas para gestão de reservas."
+				}
+			],
+			"description": "Endpoints exclusivos para administradores do sistema."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "seu_token_jwt_aqui",
+			"type": "string"
+		}
+	]
+}
